@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  
+		MessageBeanImpl messagebean = new MessageBeanImpl("lee"); //생성자
+		messagebean.setGreeting("hello"); //setter
+		
+		//main
+		messagebean.sayHello();
+		
+		DI 문법)
+		<bean id="한 개의 이름(식별자)" name = "여러개의 이름 >> 구분자(,) 공백 (;)"  > 여러개의 변수를 만들 수 있음
+		ex) <bean id="" class="" name="m1,m2 m3;m4"
+		
+		객체를 생성하고 필요한 객체를 주입 >> xml의 목적
+		주입 방법 : 생성자 주입(의무적) - <constructor-arg> , setter 주입(선택적) - <property name>
+-->
+	<bean id="messagebean" name="m1,m2 m3;m4"   class="DI_04_Spring.MessageBeanImpl">
+		<!-- <constructor-arg>
+			<value>lee</value>  생성자가 호출되서 lee라는 값을 넣겠다 
+		</constructor-arg> -->
+		
+		<constructor-arg value="이정은"/>
+		<!-- ★★★★★★ setGreeting을 구현하는 member field의 이름을 사용하기 -->
+		<property name="greeting" value="hello" /> <!-- 아니면 위처럼 나눠서 쓸 수 있음 -->
+	</bean>
+
+</beans>

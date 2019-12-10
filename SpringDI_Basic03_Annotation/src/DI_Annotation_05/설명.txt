@@ -1,0 +1,105 @@
+Spring 통해서 (객체의 생성 과 조립(injection))
+
+1. xml 설정을 통해서 (bean 생성 , injection)
+2. xml 문서 없이도 지금과 같은 동일 작업 가능 
+   >> 자바코드 이용해서 설정 작업(JAVA 파일 + Annotation)
+   >> xml 파일 (x) (사실 스프링 부트에는 xml 파일 없음 대신, java code로 다하게 됨)
+
+3. 기존 xml :
+new GenericXmlApplicationContext("classpath:DI_Annotation_05/DI_Annotation_05.xml");
+
+   현재 java :
+new AnnotationConfigApplicationContext(ConfigContext.class); (Annotation을 가지고 있는 java class가 괄호에 들어감)
+★ ConfigContext.java >> xml 대체 >> bean을 만들고 injection 방법 >> Annotation
+
+사용 어노테이션은
+1.  @Configuration :해당 클래스가 [스프링의 설정]으로 사용됨을 지정 (xml을 대체 할 거야)
+    ex)
+    @Configuration
+    public class configcontext {}
+
+2.  @Bean
+    ex)
+    @Configuration
+    public class configcontext {
+      
+       @Bean //자바쪽에서는 이렇게 함수로 만들기
+       public User user(){ // 함수 이름이 아이디 값 id="user"
+         return new User(); //리턴하는 객체가 class="DI.User" 
+       }
+       
+       xml 에서 아래코드과 같은 형태를 위 코드처럼 함수(method) 의 형태로 설계 
+       <bean id="user" class="DI.User">
+    }
+    
+result :
+> 어노테이션과 [메서드 이름]을 이용해서 스프링 컨테이너가 사용할 빈 객체 설정
+> 메서드가 리턴하는 객체를 빈객체로 사용하겠다
+
+class MemberRegisterService{ 의존한다 = 그것을 주입한다. (MemberRegisterService는 MemberDao에 의존한다)
+   private MemberDao memberdao;
+   public MemberRegisterService(MemberDao memberdao){
+      this.memberdao = memberdao; //집합연관
+   }
+}
+
+1. xml 설정
+<bean id="memberRegSvc" class="MemberRegisterService">
+  <constructor-arg  ref="memberdao">
+</bean>
+<bean id="memberdao" class="MemberDao" />
+  
+  
+   
+★ 1.1 추가 : @Autowired 적용
+class MemberRegisterService{
+   private MemberDao memberdao;
+   
+   @Autowired
+   public MemberRegisterService(MemberDao memberdao){
+      this.memberdao = memberdao;
+   }
+}   
+ 
+xml 문서
+<context:annotation-config />   
+<bean id="memberRegSvc" class="MemberRegisterService"></bean>
+<bean id="memberdao" class="MemberDao" />   
+ 
+ 
+   
+   
+2. @Configuration
+   @bean
+   두개의 어노테이션을 이용해서 (java 코드 기반의 작업)
+   
+   @Configuration
+   class Configcontext{ //xml 대신 만드는 별도의 java 파일
+         
+         @bean
+         public MemberRegisterService memberRegSvc(){
+           return new MemberRegisterService(memberdao()); //함수를 통한 dao 주소값 주입
+         } 
+         
+         @bean
+         public MemberDao memberdao(){
+          return new MemberDao();
+         }
+   }
+   
+-------------------------------------------------------------
+옵션 :
+<bean id="m" class="board"></bean>
+
+=> 자바코드
+@bean
+public board m(){
+  return new board();
+}
+
+옵션_1
+@bean(name="hello") //만들어지는 bean을 m이라 안하고 hello로 바꿈 (그러나 이건 단지, option)
+public board m(){
+  return new board();
+}
+

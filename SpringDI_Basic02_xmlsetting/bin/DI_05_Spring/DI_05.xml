@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 
+		MyBean mybean = new MyBean();
+		MyBean mybean2 = new MyBean("hong");
+		
+		Singleton single = Singleton.getInstance();
+		Singleton single2 = Singleton.getInstance();
+
+ -->
+	<bean id="mybean" class="DI_05_Spring.MyBean"></bean>
+	<bean id="mybean2" class="DI_05_Spring.MyBean">
+		<constructor-arg value="lee" />
+	</bean>
+	
+	<bean id="single" class="DI_05_Spring.Singleton" factory-method="getInstance"></bean>	
+</beans>
+<!-- 
+Singleton single = Singleton.getInstance();
+xml 설정
+3.x.x 버전 : factory-method="getInstance"
+4.x.x 버전 : factory-method="getInstance" 생략 가능! (그러나 가독성 때문에 남겨두긴 함)
+ -->
+ 
+ 
+ 
+ 

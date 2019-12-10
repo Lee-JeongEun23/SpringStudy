@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 
+		MySqlArticleDao articledao = new MySqlArticleDao(); 
+		OracleArticleDao articledao = new OracleArticleDao(); 
+		ArticleService articleservice = new ArticleService(articledao);
+		
+		Article article = new Article();
+		articleservice.write(article); 
+ -->
+ <bean id="articledao" class="DI_06_Spring.MySqlArticleDao"></bean> <!-- 여기만 oracle로 바꾸면 orcle 구문 실행 -->
+ <bean id="articleservice" class="DI_06_Spring.ArticleService">
+ 	<constructor-arg>
+ 		<ref bean="articledao"/> <!-- bean의 아이디값 -->
+ 	</constructor-arg>
+ </bean>
+ <bean id="article" class="DI_06_Spring.Article"></bean>
+</beans>
+
+ 
+ 
+ 
+ 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 
+		BookCilent bookcilent = new BookCilent();
+		
+		Properties prop = new Properties();
+		prop.setProperty("server", "192.168.0.3");
+		prop.setProperty("connectiontimeout", "20");
+	
+		bookcilent.setConfig(prop);
+
+★ list, map, property 이 세 개는 꼭 기억하기!!!!!!!!!!!!!!!!!!
+ -->
+ <bean id="bookClient" class="DI_10_Spring.BookClient">
+ 	<property name="config">
+ 		<props>
+ 			<prop key="server">192.168.0.21</prop>
+ 			<prop key="connectiontimeout">20</prop>
+ 		</props> 	
+ 	</property> 
+ </bean>
+</beans>
+
+ 
+ 
+ 
+ 

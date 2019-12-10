@@ -1,0 +1,8 @@
+DI 의존성 주입 
+- constructor injection 
+- setter injection 
+
+injection 되는 대상 
+1. 값(value) : "A", 2000, 
+2. 객체 (bean) : ref 
+3. Collection : List, Set, Map 이 연습이 필요해요 ★

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:context="http://www.springframework.org/schema/context" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- web.xml에서의 <servlet-name>spring</servlet-name> 이거 이름과 똑같이 만들어야 함 그래야 자동으로 mapping -->
+<!-- 
+
+xml 파일
+IOC 컨테이너 안에 적재될 bean객체 생성과 injection(DI)
+
+<bean id="emp"
+<bean name="emp,emp2,emp3"
+id 속성, name 속성 : 객체의 이름(식별자)
+
+★★★★★★★★★★ SpringMVC 오면 id, name 속성이 mapping 주소로 변경
+따라서 id, name => url_pattern
+
+<bean id="/hello.htm" class="BoardController">
+id = "/hello.htm" >> mapping 주소
+
+ -->
+<bean id="/hello.htm" class="kr.or.bit.HelloController"></bean>
+<bean id="/intro.htm" class="kr.or.bit.IntroController"></bean>
+
+<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix">
+		<value>/WEB-INF/views/</value>
+	</property>
+	<property name="suffix">
+		<value>.jsp</value>
+	</property>
+</bean>
+<!-- 
+	mav.setViewName("Hello");
+	/WEB-INF/views/Hello.jsp
+ -->
+</beans>

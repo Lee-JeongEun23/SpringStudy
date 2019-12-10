@@ -1,0 +1,18 @@
+MVC 게시판
+1. 요구사항
+create table Article() >> Oracle, Mysql
+
+Model
+
+View
+
+Controller
+
+Model단
+1. DTO(VO) : Article
+2. DAO : ArticleDao (CRUD) - 인터페이스 설계 : 추상함수 (CRUD) //DAO에 있는 것을 인터페이스로 빼면서 CRUD에 관한 추상함수 만들기
+		>> 구현 : OracleDao	ArticleDao 구현하는
+		>> 구현 : MysqlDao	ArticleDao 구현하는
+3. Service 클래스
+
+요청 -> Controller -> [Service -> DAO -> DTO]-> Controller -> View 구현 -> 응답

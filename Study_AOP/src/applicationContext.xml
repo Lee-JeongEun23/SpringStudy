@@ -7,6 +7,7 @@
 
 <!-- @Aspect 가 있는 클래스를 자동으로 찾아서 설정 -->
 <aop:aspectj-autoproxy />
+
 <!-- 공통 기능을 제공한 클래스를 빈으로 등록 -->
 <bean id="logAop" class="com.aopEx.LogAop" />
  

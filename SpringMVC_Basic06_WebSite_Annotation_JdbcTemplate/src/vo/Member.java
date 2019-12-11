@@ -3,22 +3,29 @@ package vo;
 import java.util.Date;
 
 public class Member {
-	private String uid;
+	private String userid;
 	private String pwd;
 	private String name;
 	private String gender;
 	private String birth;
 	private String isLunar;
-	private String cPhone;
+	private String cphone;
 	private String email;
 	private String habit;
 	private Date   regDate;
 	
-	public String getUid() {
-		return uid;
+
+	public String getUserid() {
+		return userid;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getCphone() {
+		return cphone;
+	}
+	public void setCphone(String cphone) {
+		this.cphone = cphone;
 	}
 	public String getPwd() {
 		return pwd;
@@ -49,12 +56,6 @@ public class Member {
 	}
 	public void setIsLunar(String isLunar) {
 		this.isLunar = isLunar;
-	}
-	public String getCPhone() {
-		return cPhone;
-	}
-	public void setCPhone(String cPhone) {
-		this.cPhone = cPhone;
 	}
 	public String getEmail() {
 		return email;

@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -10,15 +11,31 @@ public class Notice {
 	private String writer;
 	private Date regdate;
 	private String fileSrc;
+	private String fileSrc2; //setter, getter 만들기
 	private int hit;
 	private String content;
 	
+	/*단일 파일은 이제 필요 없음
 	private String name;
 	private int age;
 	private String image;
+	*/
 	
-	private CommonsMultipartFile file;	
-	
+	//다중 파일 업로드 >> List<>
+	private List<CommonsMultipartFile> files;	
+		
+	public List<CommonsMultipartFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<CommonsMultipartFile> files) {
+		this.files = files;
+	}
+	public String getFileSrc2() {
+		return fileSrc2;
+	}
+	public void setFileSrc2(String fileSrc2) {
+		this.fileSrc2 = fileSrc2;
+	}
 	public String getFileSrc() {
 		return fileSrc;
 	}
@@ -61,30 +78,7 @@ public class Notice {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	public CommonsMultipartFile getFile() {
-		return file;
-	}
-	public void setFile(CommonsMultipartFile file) {
-		this.file = file;
-	}
+
 	
 	
 	

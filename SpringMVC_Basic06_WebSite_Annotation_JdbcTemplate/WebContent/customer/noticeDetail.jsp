@@ -114,10 +114,18 @@
 						</dl>
 						<dl class="article-detail-row">
 							<dt class="article-detail-title">
-								첨부파일
+								첨부파일_1
 							</dt>
 							<dd class="article-detail-data">
 								<a href="">${notice.fileSrc}</a>
+							</dd>
+						</dl>
+						<dl class="article-detail-row">
+							<dt class="article-detail-title">
+								첨부파일_2
+							</dt>
+							<dd class="article-detail-data">
+								<a href="">${notice.fileSrc2}</a>
 							</dd>
 						</dl>
 

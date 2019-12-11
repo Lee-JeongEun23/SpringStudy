@@ -3,6 +3,7 @@ package ncontroller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,49 +90,41 @@ public class CustomerController {
 	//글쓰기 처리 noticeReg.htm
 	@RequestMapping(value="noticeReg.htm", method=RequestMethod.POST)
 	public String submit(Notice notice, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		//Notice DTO
+		//private List<CommonsMultipartFile> files;
+		//files[0] = new CommonsMultipartFile() >> 1.jpg
+		//files[1] = new CommonsMultipartFile() >> 2.jpg
 		
-		/*		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		List<CommonsMultipartFile> files = notice.getFiles(); //파일 정보 넘어 옴
+		List<String> filenames = new ArrayList<String>(); // 파일명 관리
 		
-		notice.setTitle(title);
-		notice.setTitle(content);
-		
-		
-		int list = 0;
-		try {
-			list = noticeDao.insert(notice);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		//for문을 돌면서 정보를 가져옴
+		if(files != null && files.size() > 0) { //최소 한개의 업로드가 있다면
+			for(CommonsMultipartFile multifile : files) {
+				String filename = multifile.getOriginalFilename();
+				String path = request.getServletContext().getRealPath("/customer/upload");
+				
+				String fpath = path + "\\" + filename;
+				if(!filename.equals("")) { //실파일 업로드
+					FileOutputStream fs = new FileOutputStream(fpath);
+					fs.write(multifile.getBytes());
+					fs.close();
+				}
+				filenames.add(filename); //파일명을 별도 관리 (DB insert)
+			}
 		}
-		*/	
-		CommonsMultipartFile imagefile = notice.getFile(); //파일 정보 넘어 옴
-		
-		//POINT
-		notice.setImage(imagefile.getName()); //이렇게 해야 DB에 파일명이 들어감
-		
-		//실파일 업로드(write 작업 : 웹 서버 특정 경로에 File Write)
-		String filename = imagefile.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/customer/upload"); //real경로는 아파치 톰켓이 제공하는 서버
-		
-		String fpath = path + "\\" + filename;
-		System.out.println(fpath);
-		FileOutputStream fs = new FileOutputStream(fpath); //파일 생성
-		fs.write(imagefile.getBytes());
-		fs.close();
 
 		//DB 파일명 저장
-		notice.setFileSrc(filename);
+		notice.setFileSrc(filenames.get(0));
+		notice.setFileSrc2(filenames.get(1));
+		
 		noticeDao.insert(notice);		
 		return "redirect:notice.htm";
 		
 	}
 	
 	//글삭제하기 (noticeDel.htm) : seq(parameter)
-	//return "redirect:notice.htm"
-	
+	//return "redirect:notice.htm"	
 	@RequestMapping(value="noticeDel.htm", method=RequestMethod.GET)
 	public String delete(String seq) {
 		int notice;
@@ -163,23 +156,29 @@ public class CustomerController {
 	@RequestMapping(value="noticeEdit.htm", method=RequestMethod.POST)
 	public String editsubmit(String seq, Notice notice, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 
-		CommonsMultipartFile imagefile = notice.getFile(); //파일 정보 넘어 옴
+		List<CommonsMultipartFile> files = notice.getFiles(); //파일 정보 넘어 옴
+		List<String> filenames = new ArrayList<String>(); // 파일명 관리
 		
-		//POINT
-		notice.setImage(imagefile.getName()); //이렇게 해야 DB에 파일명이 들어감
-		
-		//실파일 업로드(write 작업 : 웹 서버 특정 경로에 File Write)
-		String filename = imagefile.getOriginalFilename();
-		String path = request.getServletContext().getRealPath("/customer/upload"); //real경로는 아파치 톰켓이 제공하는 서버
-		
-		String fpath = path + "\\" + filename;
-		System.out.println(fpath);
-		FileOutputStream fs = new FileOutputStream(fpath); //파일 생성
-		fs.write(imagefile.getBytes());
-		fs.close();
+		//for문을 돌면서 정보를 가져옴
+		if(files != null && files.size() > 0) { //최소 한개의 업로드가 있다면
+			for(CommonsMultipartFile multifile : files) {
+				String filename = multifile.getOriginalFilename();
+				String path = request.getServletContext().getRealPath("/customer/upload");
+				
+				String fpath = path + "\\" + filename;
+				if(!filename.equals("")) { //실파일 업로드
+					FileOutputStream fs = new FileOutputStream(fpath);
+					fs.write(multifile.getBytes());
+					fs.close();
+				}
+				filenames.add(filename); //파일명을 별도 관리 (DB insert)
+			}
+		}
 
 		//DB 파일명 저장
-		notice.setFileSrc(filename);
+		notice.setFileSrc(filenames.get(0));
+		notice.setFileSrc2(filenames.get(1));
+
 		noticeDao.update(notice);
 		
 		return "redirect:noticeDetail.htm?seq="+notice.getSeq();

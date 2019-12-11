@@ -44,7 +44,7 @@
 						<a href="joinus/login.jsp">로그인</a>
 					</li>
 					<li>
-						<a href="joinus/join.jsp">회원가입</a>
+						<a href="joinus/join.htm">회원가입</a>
 					</li>
 				</ul>
 				<h3 class="hidden">회원메뉴</h3>

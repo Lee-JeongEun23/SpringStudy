@@ -1,3 +1,6 @@
-.metadata/
+/.metadata/
 *.class
 Servers/
+Spring_Utils/
+SpringLabs/.metadata/
+SpringLabSTS/.metadata/

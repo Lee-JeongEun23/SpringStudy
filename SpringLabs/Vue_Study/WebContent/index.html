@@ -3,33 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>Vue.js App</title>
-        <link href="main.css" rel="stylesheet">
-    <style>
-    /* opacity : 0에서 1까지 fade in & out */
-    .v-enter-active, .v-leave-active {
-        transition: opacity 1s;
-    }
-    .v-enter, .v-leave-to{
-        opacity: 0;
-    }
-    
-    </style>    
+        <link href="main.css" rel="stylesheet">    
     </head>
     <body>
         <div id="app">
             <!--여기에 템플릿 출력-->
-            <!--
-            <h1>{{message}}</h1>
-            <input v-model="message">
-            <p v-if="show">Hello Vue.js</p>
-            <ol>
-                <li v-for="item in list">{{item}}</li>
-            </ol>
-            -->
-            <button v-on:click="show=!show">변경하기</button>
-            <transition>
-                <p v-if="show">Hello Vue.js</p>
-            </transition>
+            <ul>
+                <li v-for="item in list" v-bind:key="item.id">
+                    ID.{{item.id}} {{item.name}} HP.{{item.hp}}
+                </li>
+            </ul>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!--div 안에 넣기-->
         <script src="main.js"> </script>

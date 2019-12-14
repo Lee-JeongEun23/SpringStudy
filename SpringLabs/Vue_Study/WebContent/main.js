@@ -1,18 +1,20 @@
 var app = new Vue({ 
-    el: '#app', //옵션
-    /*
+    el: '#app', //옵션    
     data: {
-        list: ['사과', '바나나', '딸기']
-    },
-    
-    methods: {
-        handleClick:function(event){
-            alert(event.target)
-        }
-    },
-    */
-    data: {
-        show: true
+        list: [
+            {id: 1, name: '슬라임', hp: 100},
+            {id: 2, name: '고블린', hp: 200},
+            {id: 3, name: '드래곤', hp: 500}
+        ] 
     }
     
+    /*
+        mounted: function(){
+        this.scroll = 100 //요소의 스크롤양 조작하기
+    },
+    created: function(){
+        //이 인스턴스의 생성과 초기화가 종료되었을 때 console에 created 찍힘
+        console.log('created') 
+    }
+    */
 });

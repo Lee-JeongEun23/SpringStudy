@@ -8,12 +8,12 @@ $(function() {
 			.prepend(
 					'부서 번호 : <select id="deptSelect" class="custom-select" style="margin-right : 10px; width: 80px"></select>');
 	$.ajax({
-		url : "GetDeptNos",
+		url : "GetDeptNos.do",
 		dataType : "json",
 		success : function(data) {
 			$("#deptSelect").empty();
 			$("#deptSelect").append("<option value='*'> * </option>");
-			$.each(data.deptno, function(index, element) {
+			$.each(data.deptnos, function(index, element) {
 				$("#deptSelect").append("<option value='" + element + "'>" + element + "</option>");
 			})
 		}

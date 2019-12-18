@@ -5,7 +5,12 @@ var app = new Vue({
             {id: 1, name: '슬라임', hp: 100},
             {id: 2, name: '고블린', hp: 200},
             {id: 3, name: '드래곤', hp: 500}
-        ] 
+        ]   
+    },
+    methods: {
+        doAttack: function(index) {
+            this.list[index].hp -= 10
+        }
     }
     
     /*

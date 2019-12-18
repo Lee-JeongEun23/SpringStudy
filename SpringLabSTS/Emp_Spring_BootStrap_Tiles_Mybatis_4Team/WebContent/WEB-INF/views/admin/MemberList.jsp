@@ -23,7 +23,7 @@
 </head>
 
 <body id="page-top">
-<c:set var="emplist" value="${requestScope.emplist}"/>
+<c:set var="emps" value="${emps}"/>
     <!-- Top -->
     <jsp:include page="/common/Top.jsp"></jsp:include>
     <div id="wrapper">
@@ -51,7 +51,7 @@
                                         </tr>
                                     </thead>
 								<tbody>
-									<c:forEach var="emp" items="${emplist}">
+									<c:forEach var="emp" items="${emps}">
 										<tr>
 											<td class="sorting_1"><a href="MemberDetail.do?empno=${emp.empno }">${emp.empno}</a></td>
 											<td>${emp.ename}</td>

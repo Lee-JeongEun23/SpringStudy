@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:security="http://www.springframework.org/schema/security"
+          xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                                  http://www.springframework.org/schema/security 
+                                  http://www.springframework.org/schema/security/spring-security.xsd">
+
+   <!-- 
+   		※ 1단계 ※
+         인증과 권한 기본 설정 방식으로 사용자 만들고 권한 설정하기      
+         auto-config="true" : 기본 제공 로그인 폼과 Controller  사용
+         
+         -> 3.x.x => access => ROLE_USER
+         -> 4.x.x => access => hasRole("ROLE_USER")
+   
+   <security:http auto-config="true">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/customer/noticeDetail.htm" access="hasRole('ROLE_USER')"/>
+      <security:intercept-url pattern="/customer/noticeReg.htm" access="hasRole('ROLE_ADMIN')"/>
+   </security:http>
+   
+   <security:authentication-manager>
+      <security:authentication-provider>
+         <security:user-service>
+            <security:user name="lee" password="1004" authorities="ROLE_USER"/>
+            <security:user name="admin" password="1004" authorities="ROLE_ADMIN, ROLE_USER"/>
+         </security:user-service>
+      </security:authentication-provider>
+   </security:authentication-manager>
+    -->
+    
+    <!-- 
+     ※ 2단계 ※
+    1단계 >> 로그인 자동화 처리 >> /login >> (controller > id, pwd > 인증, 권한 확인 > session .. 
+    									> /logout >> 직접 처리 )
+    									
+    <form-login 속성 값>								
+    login-page : login form 페이지 URL
+	username-parameter : form id의 name 속성값 (email >> id)
+	password-parameter : form pw의 name 속성값
+	login-processing-url : form action 값 (security를 이용해 인증처리) 로그인 controller 자동화 하지 않음(내가 원하는 컨트롤 태울 수 있음)
+	default-target-url : 로그인 성공 시 이동 URL
+	authentication-failure-url : 로그인 실패 시 이동 URL 
+	always-use-default-target : true 로 하면 무조건 default-target-url 로 이동한다. false 로 하면 authentication-success-handler 대로 redirect 된다.
+	authentication-success-handler-ref : 로그인 성공 시 프로세스 정의, bean id 입력
+	만약 최종 로그인일시를 DB에 기록해야한다면 handler로 처리하는게 좋겠다.
+	res.sendRedirect 등으로 처리
+	authentication-failure-handler-ref : 로그인 실패 시 프로세스 정의, bean id 입력
+		
+		
+	<security:logout>
+	logout-url : 로그아웃 처리할 URL (security가 알아서 만들기 때문에, 이 경로로 요청만 하면된다)
+	logout-success-url : 로그아웃 성공 시 이동 URL
+	success-handler-ref : 로그아웃 성공 시 프로세스 정의, bean id 입력
+	invalidate-session : 로그아웃 시 세션 삭제여부
+	
+	<session-management> 이전 pc 로그아웃 하고 현재 session 남아있게 하고 뭐 여러가지 이런거ㅎㅎ
+	invalid-session-url : invalid session(세션 타임아웃 등) 일 때 이동 URL
+	max-sessions : 최대 허용 가능한 세션 수
+	expired-url : 중복 로그인 발생시 이동 URL (처음 접속한 세션이 invalidate가 되고 다음 요청시 invalid-session-url로 이동)
+	error-if-maximum-exceeded : max-sessions을 넘었을때 접속한 세션을 실패처리할지 여부 (expired-url와 얘중에 하나만 쓰면 될듯)
+			
+     <security:http>
+     	<security:csrf disabled="true"/>
+     	<security:form-login login-page="/joinus/login.htm" authentication-failure-url="/joinus/login.htm?error"/>
+     	<security:logout logout-success-url="/index.htm"/>
+     	<security:intercept-url pattern="/customer/noticeDetail.htm" access="hasRole('ROLE_USER')"/>
+     	<security:intercept-url pattern="/customer/noticeReg.htm" access="hasRole('ROLE_ADMIN')"/>
+     </security:http>
+     
+     <security:authentication-manager>
+      <security:authentication-provider>
+         <security:user-service>
+            <security:user name="lee" password="1004" authorities="ROLE_USER"/>
+            <security:user name="admin" password="1004" authorities="ROLE_ADMIN, ROLE_USER"/>
+         </security:user-service>
+      </security:authentication-provider>
+   </security:authentication-manager>
+    -->
+
+	<security:http>
+		<security:csrf disabled="true" />
+		<security:form-login default-target-url="/index.htm" login-page="/joinus/login.htm" authentication-failure-url="/joinus/login.htm?error" />
+		<security:logout logout-success-url="/index.htm" />
+		<!-- <security:intercept-url pattern="/customer/noticeDetail.htm" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/customer/noticeReg.htm" access="hasRole('ROLE_ADMIN')" /> -->
+		<security:intercept-url pattern="/customer/*Reg.htm" access="hasRole('ROLE_USER')" />
+  		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+	</security:http>  
+	
+        <security:authentication-manager>
+      <security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
+		users-by-username-query="SELECT USERID, pwd AS PASSWORD, 1 enabled FROM member where userid=?"
+		authorities-by-username-query="select m.USERID , r.ROLE_NAME  
+           												from member m join roll r 
+           												on m.userid = r.userid 
+           												where m.userid=?"/>
+
+      </security:authentication-provider>
+   </security:authentication-manager>
+</beans>

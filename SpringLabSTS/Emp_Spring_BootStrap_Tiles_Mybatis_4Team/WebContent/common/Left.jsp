@@ -40,20 +40,35 @@
 		            </a>
 		            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
 		                <!-- <h6 class="dropdown-header">Login Screens:</h6> -->
-		                <a class="dropdown-item" href="MemberList.do">Member</a>
+		                <a class="dropdown-item" href="MemberAdd.do">사원 추가</a>
+		                <a class="dropdown-item" href="MemberList.do">사원 관리</a>
+		                <a class="dropdown-item" href="chat-ws.do">채팅 실행</a>
 		            </div>
 		        </li>
+		        
+		        <!-- <li class="nav-item dropdown">
+		            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+		                aria-haspopup="true" aria-expanded="false">
+		                <i class="fas fa-user-shield"></i>
+		                <span>Chart</span>
+		            </a>
+		            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+		                <h6 class="dropdown-header">Login Screens:</h6>
+		                <a class="dropdown-item" href="SalaryRanking.do?cmd=show">Chart_1</a>
+		                <a class="dropdown-item" href="SalaryRanking_won.do?cmd=show">원보연</a> 내가 선점 했음 여기 내자리
+		                <a class="dropdown-item" href="SalaryRanking_chung.do?cmd=show">Chart_3</a>
+		                <a class="dropdown-item" href="SalaryRanking_lee.do?cmd=show">Chart_4</a>
+		                <a class="dropdown-item" href="바꿔^^">Chart_5</a>
+		                <a class="dropdown-item" href="LocCount.do">Chart_6</a>
+		            </div>
+		        </li> -->
+		        
         	</c:when>
         	<c:otherwise>
         		 <li class="nav-item">
 		            <a class="nav-link" href="Login.do">
 		                <i class="fas fa-sign-in-alt"></i>
 		                <span>Login</span></a>
-		        </li>
-		         <li class="nav-item">
-		            <a class="nav-link" href="Register.do">
-		                <i class="fas fa-user-friends"></i>
-		                <span>Register</span></a>
 		        </li>
         	</c:otherwise>
         </c:choose>

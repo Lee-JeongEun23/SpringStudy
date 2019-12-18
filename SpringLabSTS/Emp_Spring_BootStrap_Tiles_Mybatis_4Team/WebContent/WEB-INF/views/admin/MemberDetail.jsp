@@ -17,6 +17,11 @@
             background-color: #e9ecef
         }
     </style>
+    <script type="text/javascript">
+	$(function(){
+		
+	})
+    </script>
 </head>
 
 <body id="page-top">

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+    
+    <!-- 검사 URL 
+    	 intercept 순서가 우선 순위
+    -->
+    <http use-expressions="true">
+       <intercept-url pattern="/login/loginForm.do" access="permitAll" /> <!-- permitAll : 모든 사용자에게 허가 -->
+       <intercept-url pattern="/home.do" access="permitAll" /> 
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')" />
+        
+        <form-login login-page="/login/loginForm.do"
+                    default-target-url="/home.do"
+                    authentication-failure-url="/login/loginForm.do?error"
+                    username-parameter="id"
+                    password-parameter="password" />
+        <logout logout-url="/logout"
+                logout-success-url="/home.do" />
+                
+        <access-denied-handler error-page="/login/accessDenied.do" />
+    </http>
+    
+    <!--  provider  -->
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="user" password="1004" authorities="ROLE_USER" />
+                <user name="admin" password="1004" authorities="ROLE_ADMIN" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+    
+</beans:beans>

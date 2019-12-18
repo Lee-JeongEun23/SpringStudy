@@ -9,8 +9,12 @@
         <div id="app">
             <!--여기에 템플릿 출력-->
             <ul>
-                <li v-for="(item,index) in list" v-bind:key="item.id">
+                <li v-for="item in list" 
+                    v-bind:key="item.id"
+                    v-if="item.hp">
                     ID.{{item.id}} {{item.name}} HP.{{item.hp}}
+                    <span v-if="item.hp < 50"> 큰 피해..!</span>
+                    <button v-on:click="doAttack(index)">공격하기</button>
                 </li>
             </ul>
         </div>

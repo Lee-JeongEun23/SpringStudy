@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>에코</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function() {
+      $('#sendBtn').click(function() { sendMessage(); });
+   });
+   
+   var wsocket;
+   function sendMessage() {
+      wsocket = new WebSocket("ws://localhost:8090/Emp_Spring_BootStrap_Tiles_Mybatis_4Team/socket/echo-ws"); //웹소켓 서버에 연결
+      console.log("1");
+      wsocket.onmessage = onMessage;
+      console.log("2");
+      wsocket.onclose = onClose;
+      console.log("3");
+      wsocket.onopen = function() {
+         wsocket.send( $("#message").val() ); //웹소켓 서버에 데이터 전송
+      };
+   }
+   function onMessage(evt) {
+	   console.log("4");
+      var data = evt.data;
+      alert("서버에서 데이터 받음: " + data);
+      wsocket.close();
+   }
+   function onClose(evt) {
+	   console.log("5");
+      alert("연결 끊김");
+   }
+</script>
+</head>
+<body>
+    <input type="text" id="message">
+    <input type="button" id="sendBtn" value="전송">
+</body>
+</html>

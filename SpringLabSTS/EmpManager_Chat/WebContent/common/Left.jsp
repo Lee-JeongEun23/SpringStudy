@@ -23,12 +23,17 @@
                 <span>Main</span>
             </a>
         </li>
-        <li class="nav-item">
-           <a class="nav-link" href="Chat.do">
-               <i class="fas fa-comments"></i>
-               <span>실시간 채팅</span>
-            </a>
-       </li>
+        <c:choose>
+        	<c:when test="${isLogin}">
+		       <li class="nav-item">
+		           <a class="nav-link" href="ChatRoom.do">
+		               <i class="fas fa-comments"></i>
+		               <span>실시간 채팅방</span>
+		            </a>
+		       </li>
+			</c:when>
+		</c:choose>
+
         <%-- <c:choose>
         	<c:when test="${isLogin}">
         		<li class="nav-item">

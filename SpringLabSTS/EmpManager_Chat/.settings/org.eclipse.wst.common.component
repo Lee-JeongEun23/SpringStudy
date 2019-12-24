@@ -6,6 +6,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
         <property name="java-output-path" value="/WebJSP_JDBC_yoon/build/classes"/>
-        <property name="context-root" value="EmpManager"/>
+        <property name="context-root" value="EmpManager_Chat"/>
     </wb-module>
 </project-modules>

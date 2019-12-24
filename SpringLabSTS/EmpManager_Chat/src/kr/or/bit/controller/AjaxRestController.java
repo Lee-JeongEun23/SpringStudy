@@ -42,7 +42,6 @@ public class AjaxRestController {
 	//ajax - idcheck
 	@RequestMapping(value= "/ec.do", method = RequestMethod.POST)
 	public String idCheck(int empno) {
-		System.out.println("나오니" + empno);
 		EmpDao dao = sqlSession.getMapper(EmpDao.class);
 		Emp result = dao.getEmpByEmpno(empno);
 		

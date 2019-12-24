@@ -58,7 +58,7 @@
                                             <input type="submit" value="Login" class="btn btn-primary btn-block">
                                         </form>
                                         <div class="text-center">
-                                            <a class="d-block small mt-3" href="Register.do">Register an
+                                            <a class="d-block small mt-3" href="#">Register an
                                                 Account</a>
                                         </div>
                                     </div>

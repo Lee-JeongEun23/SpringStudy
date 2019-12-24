@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
 	var wsocket;
 
 	$(function() {
-
+		connect();
 		
 		$("#exitBtn").hide();
 		
@@ -37,9 +36,6 @@
 
 		$('#sendBtn').click(function() {
 			send("message",$('#message').val());
-		});
-		$('#enterBtn').click(function() {
-			connect();
 		});
 		$('#exitBtn').click(function() {
 			disconnect();
@@ -116,7 +112,7 @@
 	})
 	
 	function connect() { //입장 버튼 클릭시 작동 함수(웹소켓 생성)
-		wsocket = new WebSocket("ws://192.168.6.19:8090/EmpManager/Chat-ws.do");
+		wsocket = new WebSocket("ws://192.168.6.19:8090/EmpManager_Chat/Chat-ws.do");
 
 		//해당 함수 정의
 		wsocket.onopen = onOpen;
@@ -130,10 +126,11 @@
 	
 	function onOpen(evt) {
 		$("#enterBtn").hide();
-		$("#nickname").attr("disabled", true);
+		/* $("#nickname").attr("disabled", true); */
 		$("#exitBtn").show();
 		$("#inputBox").show();
-		send("join",$("#nickname").val());
+		send("join",$("#user").val());
+		
 		
 	}
 
@@ -147,17 +144,18 @@
 
 	function onClose(evt) {
 		$("#enterBtn").show();
-		$("#nickname").val("");
+		/* $("#nickname").val(""); */
 		$("#chatMessageArea").empty();
-		$("#nickname").attr("disabled", false);
+		/* $("#user").attr("disabled", false); */
 		$("#exitBtn").hide();
 		$("#inputBox").hide();
 	}
 
 	function send(cmd, message) {
 		let data = { message : message
-						, sender : $("#nickname").val()
-						, cmd : cmd };
+						, sender : $("#user").val()
+						, cmd : cmd
+						, rname : $("#thename").text()};
 		wsocket.send(JSON.stringify(data));
 		$("#message").val("");
 	}
@@ -199,10 +197,10 @@
 			console.log(members);
 			$("#memberbox").empty();
 			$.each(members, function(index, element){
-				if(element == $("#nickname").val())
-					$("#memberbox").append("<span>"+element+"<span><hr>");
+				if(element == $("#user").val())
+					$("#memberbox").append("<span style='margin-left: 140px; font-size:18px;'>"+element+"<span><hr>");
 				else
-					$("#memberbox").append("<span>"+element+"<span><hr>");
+					$("#memberbox").append("<span style='margin-left: 140px; font-size:18px;'>"+element+"<span><hr>");
 			})
 		}
 	
@@ -210,14 +208,14 @@
 </head>
 <style>
 #chatArea {
-	height: 300px;
+	height: 320px;
 	overflow-y: auto;
-	border: 1px solid black;
+	border: 2px solid black;
 }
 
 #memberArea {
-	height: 380px;
-	border: 1px solid black;
+	height: 320px;
+	border: 2px solid black;
 }
 
 #msgmyname {
@@ -263,31 +261,39 @@
 
 #msgsystem {
 	color: black;
-	margin-left: 38%;
+	margin-left: 200px;
 	cleat: both;
+	
 }
 </style>
 <body id="page-top">
-	<!-- Top -->
-	<c:import url="/common/Top.jsp" />
-	<div id="wrapper">
-		<!-- Left Menu -->
-		<c:import url="/common/Left.jsp" />
-
-		<div id="content-wrapper">
-
+<c:set var="userid" value="${sessionScope.userid}"/>
+<c:set var="chatname" value="${param.room}"/>
+<input type="hidden" id="user" value="${userid}">
 			<!-- !! Content !! -->
-			<div class="container-fluid">
+			<br><br><br>
+			<div class="container">
 				<div class="card mb-3">
 					<div class="card-header">
-						<i class="fas fa-comments"></i> 실시간 채팅
+						<i class="fas fa-comments"></i> <span id="thename">${chatname}</span> 
+						<select id="font" style="height: 30px; width: 250px; float:right;">
+								<option hidden>채팅창 글꼴 설정</option>
+								<option value="'Nanum Brush Script', cursive;"
+									style="font-family: 'Nanum Brush Script', cursive;">나눔붓체</option>
+								<option value="'Jua', sans-serif;" style="font-family: 'Jua', sans-serif;">주아체</option>
+								<option value="'Hi Melody', cursive;"
+									style="font-family: 'Hi Melody', cursive;">하이멜로디체</option>
+								<option value="'Gothic A1', sans-serif;"
+									style="font-family: 'Gothic A1', sans-serif;">고딕체</option>
+							</select>
+
 					</div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-7">
 								<div class="table-responsive">
-									이름 : <input type="text" id="nickname" style="width: 250px;">
-									<input type="button" id="enterBtn" value="입장"> <input
+<%-- 									이름 : <input type="text" id="nickname" style="width: 250px;" value="${userid}">
+									<input type="button" id="enterBtn" value="입장"> --%> <input
 										type="button" id="exitBtn" value="나가기"> <br> <br>
 									<h5>채팅방</h5>
 									<div id="chatArea">
@@ -312,8 +318,8 @@
 							</div>
 							<!-- <div class="col-md-1"></div> -->
 							<div class="col-md-4">
-								<div class="changebox" style="float: right;">
-									<select id="font" style="height: 30px; width: 250px;">
+								<div class="changebox">
+<!-- 									<select id="font" style="height: 30px; width: 250px;">
 										<option hidden>채팅창 글꼴 설정</option>
 										<option value="'Nanum Brush Script', cursive;"
 											style="font-family: 'Nanum Brush Script', cursive;">나눔붓체</option>
@@ -322,14 +328,14 @@
 											style="font-family: 'Hi Melody', cursive;">하이멜로디체</option>
 										<option value="'Gothic A1', sans-serif;"
 											style="font-family: 'Gothic A1', sans-serif;">고딕체</option>
-									</select>
+									</select> -->
 								<br>
-								<br>
-								<h5 style="float:right;">참여 멤버</h5>		 
+								<br> 
 								</div>
+								<h5>참여 멤버</h5>	
 								
 								
-								<div id="memberbox" style="float: right; border:1px solid black; width: 350px; height: 300px;">
+								<div id="memberbox" style="border:2px solid black; width: 100%; height: 320px;">
 								
 								
 								</div>
@@ -338,11 +344,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- Bottom -->
-			<c:import url="/common/Bottom.jsp" />
-		</div>
-	</div>
 </body>
 
 </html>

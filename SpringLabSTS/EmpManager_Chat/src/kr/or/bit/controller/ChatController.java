@@ -9,4 +9,9 @@ public class ChatController {
 	public String showView() {
 		return "/WEB-INF/views/chat/Chat.jsp";
 	}
+	
+	@RequestMapping("/ChatRoom.do")
+	public String showChat() {
+		return "/WEB-INF/views/chat/ChatRoom.jsp";
+	}
 }

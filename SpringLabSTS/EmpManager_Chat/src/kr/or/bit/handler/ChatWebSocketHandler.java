@@ -17,7 +17,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
-	private Map<String, WebSocketSession> users = new ConcurrentHashMap<>();
+	private Map<String, WebSocketSession> users = new ConcurrentHashMap<>(); // 접속한 전체 유저 관리
 	private Map<String, String> memberName = new HashMap<>();
 	private Map<String, String> ChatName = new HashMap<>();
 	
